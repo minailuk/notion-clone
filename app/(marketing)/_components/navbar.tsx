@@ -1,17 +1,19 @@
 "use client";
 
-import { useScrollTop } from "@/hooks/use-scroll-top";
-import { cn } from "@/lib/utils";
-import { Logo } from "./logo";
-import { ModeToggle } from "@/components/mode-toggle";
 import { useConvexAuth } from "convex/react";
-import { SignUpButton, UserButton } from "@clerk/clerk-react";
-import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/spinner";
+import { SignInButton, UserButton } from "@clerk/clerk-react";
 import Link from "next/link";
 
-const Navbar = () => {
-  const { isLoading, isAuthenticated } = useConvexAuth();
+import { useScrollTop } from "@/hooks/use-scroll-top";
+import { ModeToggle } from "@/components/mode-toggle";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/spinner";
+import { cn } from "@/lib/utils";
+
+import { Logo } from "./logo";
+
+export const Navbar = () => {
+  const { isAuthenticated, isLoading } = useConvexAuth();
   const scrolled = useScrollTop();
 
   return (
@@ -26,14 +28,14 @@ const Navbar = () => {
         {isLoading && <Spinner />}
         {!isAuthenticated && !isLoading && (
           <>
-            <SignUpButton mode="modal">
+            <SignInButton mode="modal">
               <Button variant="ghost" size="sm">
                 Log in
               </Button>
-            </SignUpButton>
-            <SignUpButton mode="modal">
-              <Button size="sm">Get jotion free</Button>
-            </SignUpButton>
+            </SignInButton>
+            <SignInButton mode="modal">
+              <Button size="sm">Get Jotion free</Button>
+            </SignInButton>
           </>
         )}
         {isAuthenticated && !isLoading && (
@@ -49,5 +51,3 @@ const Navbar = () => {
     </div>
   );
 };
-
-export default Navbar;
